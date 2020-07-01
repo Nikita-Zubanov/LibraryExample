@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using LibraryExample.Services;
 using Microsoft.AspNetCore.Builder;
@@ -26,12 +27,12 @@ namespace LibraryExample
         {
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
-            services.AddDbContext<LibraryDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("LibraryDB")));
+            services.AddDbContext<AppDbContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("LibraryDB")));
+
             services.AddTransient<ILibraryService, LibraryService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -39,24 +40,18 @@ namespace LibraryExample
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseStaticFiles();
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "DefaultApi",
                     template: "api/{controller}/{action}");
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Home", action = "Index" });
             });
-
-            //app.UseRouting();
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapGet("/", async context =>
-            //    {
-            //        await context.Response.WriteAsync("Hello World!");
-            //    });
-            //});
         }
     }
 }

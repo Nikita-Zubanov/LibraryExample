@@ -10,7 +10,12 @@ namespace LibraryExample.Services
     {
         void AddBook(Book book);
         void ChangeBook(Book book);
-        void DeleteBook(int id);
+        void DeleteBook(int? id);
         IEnumerable<Book> GetBooks();
+        IEnumerable<Genre> GetGenres();
+        IEnumerable<Author> GetAuthors();
+        Book GetBook(int? id);
+        bool HasBookWithId(int? id);
+        bool HasBookWithTitle(string title);
     }
 }

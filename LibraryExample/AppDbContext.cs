@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace LibraryExample
 {
-    public class LibraryDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public LibraryDbContext(DbContextOptions<LibraryDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
